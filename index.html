@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>WebSwan E-Signature Agreement</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -50,6 +50,7 @@
             align-items: center;
             justify-content: center;
             margin-bottom: 15px;
+            flex-wrap: wrap;
         }
 
         .logo i {
@@ -124,10 +125,9 @@
             background-color: #e1e9f0;
             font-weight: bold;
             color: #073766;
-
-            /* 3D effect */
             border-style: inset;
             box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2) inset;
+            -webkit-appearance: none;
         }
 
         .auto-resize {
@@ -153,15 +153,21 @@
             overflow-y: auto;
             max-height: 400px;
             -webkit-overflow-scrolling: touch;
+            background: #f8f9fa;
         }
 
         .disclaimer-container h2 {
             color: #14395d;
             font-weight: bold;
+            margin-bottom: 15px;
         }
 
         .disclaimer-container strong {
             color: #14395d;
+        }
+
+        .disclaimer-container p {
+            margin-bottom: 15px;
         }
 
         .signature-section {
@@ -175,7 +181,10 @@
             border: 2px dashed #95a5a6;
             border-radius: 5px;
             margin-top: 10px;
-            height: 200px; /* Medium size */
+            height: 200px;
+            background: white;
+            touch-action: none;
+            -webkit-tap-highlight-color: transparent;
         }
 
         #signature-pad {
@@ -184,11 +193,22 @@
             background-color: #ecf0f1;
             border-radius: 5px;
             cursor: crosshair;
+            touch-action: none;
+            display: block;
         }
 
         #signature-pad.disabled {
             opacity: 0.6;
             cursor: not-allowed;
+            pointer-events: none;
+        }
+
+        .signature-controls {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 15px;
+            flex-wrap: wrap;
         }
 
         .btn-row {
@@ -197,12 +217,14 @@
         }
 
         .btn {
-            padding: 10px 20px;
+            padding: 12px 24px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
             font-weight: bold;
-            transition: background-color 0.3s ease;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            min-width: 120px;
         }
 
         .btn-primary {
@@ -210,14 +232,40 @@
             color: white;
         }
 
+        .btn-primary:hover {
+            background-color: #1e4a7a;
+        }
+
         .btn-secondary {
             background-color: #95a5a6;
             color: white;
         }
 
+        .btn-secondary:hover {
+            background-color: #7f8c8d;
+        }
+
         .btn-success {
             background: #28a745;
             color: white;
+        }
+
+        .btn-success:hover {
+            background: #218838;
+        }
+
+        .btn-sms {
+            background: #25D366;
+            color: white;
+        }
+
+        .btn-sms:hover {
+            background: #128C7E;
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
         }
 
         footer {
@@ -241,6 +289,10 @@
             justify-content: center;
         }
 
+        .modal.active {
+            display: flex;
+        }
+
         .modal-content {
             background-color: white;
             padding: 30px;
@@ -249,6 +301,26 @@
             max-width: 450px;
             width: 90%;
             text-align: center;
+        }
+
+        .modal-content h3 {
+            color: #14395d;
+            margin-bottom: 15px;
+        }
+
+        .modal-content input {
+            width: 100%;
+            padding: 12px;
+            margin: 15px 0;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
         }
 
         .modal-close {
@@ -261,27 +333,37 @@
             font-size: 16px;
         }
 
+        .modal-close:hover {
+            background: #2c3e50;
+        }
+
         .acknowledgement-label {
             display: flex;
             align-items: center;
             justify-content: center;
             margin-top: 10px;
+            flex-wrap: wrap;
         }
+        
         .acknowledgement-label input {
             margin-right: 8px;
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
         }
+
+        .acknowledgement-label p {
+            margin: 0;
+        }
+        
         .emoji {
             font-size: 24px;
             margin-right: 10px;
         }
 
         @keyframes bounce {
-            0%, 100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-5px);
-            }
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
         }
 
         .emoji-bounce {
@@ -289,12 +371,8 @@
         }
 
         @keyframes writing {
-            0%, 100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-5px) rotate(-10deg);
-            }
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px) rotate(-10deg); }
         }
 
         .emoji-writing {
@@ -310,6 +388,43 @@
             color: #155724;
             border-radius: 5px;
             border: 1px solid #c3e6cb;
+        }
+
+        .sms-section {
+            background: #f0f9ff;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 2px dashed #25D366;
+        }
+
+        .sms-section h3 {
+            color: #075E54;
+            margin-bottom: 15px;
+        }
+
+        /* Mobile optimizations */
+        @media (max-width: 600px) {
+            .main-wrapper {
+                padding: 10px;
+            }
+            
+            h1 {
+                font-size: 22px;
+            }
+            
+            .btn {
+                width: 100%;
+                margin: 5px 0;
+            }
+            
+            .signature-controls {
+                flex-direction: column;
+            }
+            
+            .form-grid {
+                padding: 15px;
+            }
         }
     </style>
 </head>
@@ -350,11 +465,27 @@
                         </form>
                     </div>
 
-                    <div id="disclaimer-and-signature-section" class="disclaimer-and-signature">
+                    <!-- SMS Share Section -->
+                    <div class="sms-section">
+                        <h3><i class="fab fa-whatsapp"></i> Share via SMS/WhatsApp</h3>
+                        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                            <button onclick="showSMSModal()" class="btn btn-sms" style="flex: 1;">
+                                <i class="fas fa-sms"></i> Send via SMS
+                            </button>
+                            <button onclick="shareViaWhatsApp()" class="btn btn-sms" style="flex: 1; background: #128C7E;">
+                                <i class="fab fa-whatsapp"></i> WhatsApp
+                            </button>
+                        </div>
+                        <p class="link-note" style="font-size: 12px; margin-top: 10px; color: #666;">
+                            Share this agreement via SMS or WhatsApp. The signature pad will work perfectly on mobile devices.
+                        </p>
+                    </div>
+
+                    <div id="disclaimer-and-signature-section" class="disclaimer-and-signature show">
                         <div class="disclaimer-container">
                             <h2>WebSwan Scope of Work for Web Design Services</h2>
                             <p><strong>1. Project Overview</strong><br>
-                            We begin with a free demo at no cost and with no obligation. This demo requires approximately 15 minutes of your time to review the design and discuss any updates or changes you would like. If you decide not to proceed, you pay nothing. Once the presentation is complete and the website’s core structure and design links are in place, we will collect full payment and continue working to complete the remaining links and content. Please note that at the time of payment, the website’s design and structure will be established, but not all links will yet be fully live. This project involves the design, development, and maintenance of a professional website for [Client's Business]. The website will serve as a platform to showcase Client's Business/Product/Services and engage with potential customers.</p>
+                            We begin with a free demo at no cost and with no obligation. This demo requires approximately 15 minutes of your time to review the design and discuss any updates or changes you would like. If you decide not to proceed, you pay nothing. Once the presentation is complete and the website's core structure and design links are in place, we will collect full payment and continue working to complete the remaining links and content. Please note that at the time of payment, the website's design and structure will be established, but not all links will yet be fully live. This project involves the design, development, and maintenance of a professional website for [Client's Business]. The website will serve as a platform to showcase Client's Business/Product/Services and engage with potential customers.</p>
                             <p><strong>2. Deliverables</strong><br>
                             Custom website design and layout based on client's branding and requirements. Development of responsive website pages optimized for desktop and mobile devices. Integration of essential features such as contact forms, galleries, and social media links, security measures and set up of website hosting.</p>
                             <p><strong>3. Pricing and Payment Terms</strong><br>
@@ -384,14 +515,14 @@
                             </div>
                             <div class="signature-controls">
                                 <button type="button" class="btn btn-secondary" id="clear-btn" disabled>Clear Signature</button>
-                                <button type="button" class="btn btn-primary" id="submit-btn">Submit</button>
-                                <button type="button" class="btn btn-success" id="print-btn">Print</button>
-                                <span class="emoji emoji-writing">✍️</span>
+                                <button type="button" class="btn btn-primary" id="submit-btn">Submit Agreement</button>
+                                <button type="button" class="btn btn-success" id="print-btn">Print / Save PDF</button>
                             </div>
                         </div>
                     </div>
                 </main>
                 <div id="success-message">
+                    <i class="fas fa-check-circle" style="font-size: 24px; margin-right: 10px;"></i>
                     Form submitted successfully!
                 </div>
             </div>
@@ -401,15 +532,30 @@
         </div>
     </div>
 
+    <!-- Acknowledgment Modal -->
     <div id="acknowledgmentModal" class="modal">
         <div class="modal-content">
-            <h2>Please Acknowledge</h2>
+            <h3><i class="fas fa-exclamation-circle" style="color: #e74c3c;"></i> Please Acknowledge</h3>
             <p>You must read and agree to the terms and conditions by checking the box before signing.</p>
-            <button class="modal-close">Okay</button>
+            <button class="modal-close">OK</button>
+        </div>
+    </div>
+
+    <!-- SMS Modal -->
+    <div id="smsModal" class="modal">
+        <div class="modal-content">
+            <h3><i class="fas fa-sms"></i> Send via SMS</h3>
+            <p>Enter the recipient's phone number:</p>
+            <input type="tel" id="smsPhoneNumber" placeholder="+1234567890" value="">
+            <div class="modal-buttons">
+                <button onclick="sendSMS()" class="btn btn-sms">Send SMS</button>
+                <button onclick="closeSMSModal()" class="modal-close">Cancel</button>
+            </div>
         </div>
     </div>
 
     <script>
+        // DOM Elements
         const emailAddressInput = document.getElementById('email-address');
         const disclaimerAndSignatureSection = document.getElementById('disclaimer-and-signature-section');
         const agreeCheckbox = document.getElementById('agreeCheckbox');
@@ -422,11 +568,14 @@
         const clientInfoForm = document.getElementById('client-info-form');
         const successMessage = document.getElementById('success-message');
 
+        // Signature Pad Setup
         const ctx = signaturePad.getContext('2d');
         let isDrawing = false;
         let lastX = 0;
         let lastY = 0;
+        let points = [];
 
+        // Initialize signature pad
         function initSignaturePad() {
             ctx.fillStyle = '#ecf0f1';
             ctx.fillRect(0, 0, signaturePad.width, signaturePad.height);
@@ -434,58 +583,176 @@
             ctx.lineWidth = 2;
             ctx.lineCap = 'round';
             ctx.lineJoin = 'round';
+            points = [];
         }
 
+        // Resize canvas for all devices
+        function resizeCanvas() {
+            const container = document.getElementById('signature-pad-container');
+            if (!container) return;
+            
+            const rect = container.getBoundingClientRect();
+            const ratio = window.devicePixelRatio || 1;
+            
+            // Set canvas dimensions
+            signaturePad.width = rect.width * ratio;
+            signaturePad.height = rect.height * ratio;
+            
+            // Set CSS dimensions
+            signaturePad.style.width = rect.width + 'px';
+            signaturePad.style.height = rect.height + 'px';
+            
+            // Scale context
+            ctx.scale(ratio, ratio);
+            
+            // Restore signature if points exist
+            if (points.length > 0) {
+                redrawSignature();
+            } else {
+                initSignaturePad();
+            }
+        }
+
+        // Redraw signature from points
+        function redrawSignature() {
+            ctx.clearRect(0, 0, signaturePad.width, signaturePad.height);
+            ctx.fillStyle = '#ecf0f1';
+            ctx.fillRect(0, 0, signaturePad.width, signaturePad.height);
+            
+            if (points.length < 2) return;
+            
+            ctx.beginPath();
+            ctx.strokeStyle = '#14395d';
+            ctx.lineWidth = 2;
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+            
+            ctx.moveTo(points[0].x, points[0].y);
+            for (let i = 1; i < points.length; i++) {
+                ctx.lineTo(points[i].x, points[i].y);
+            }
+            ctx.stroke();
+        }
+
+        // Touch and mouse event handlers
+        function getCoordinates(e) {
+            const rect = signaturePad.getBoundingClientRect();
+            const scaleX = signaturePad.width / rect.width;
+            const scaleY = signaturePad.height / rect.height;
+            
+            let clientX, clientY;
+            
+            if (e.touches) {
+                // Touch event
+                clientX = e.touches[0].clientX;
+                clientY = e.touches[0].clientY;
+                e.preventDefault();
+            } else {
+                // Mouse event
+                clientX = e.clientX;
+                clientY = e.clientY;
+            }
+            
+            return {
+                x: (clientX - rect.left) * (scaleX / window.devicePixelRatio),
+                y: (clientY - rect.top) * (scaleY / window.devicePixelRatio)
+            };
+        }
+
+        function startDrawing(e) {
+            e.preventDefault();
+            
+            if (signaturePad.classList.contains('disabled')) {
+                acknowledgmentModal.classList.add('active');
+                return;
+            }
+            
+            isDrawing = true;
+            const coords = getCoordinates(e);
+            lastX = coords.x;
+            lastY = coords.y;
+            
+            points.push({ x: lastX, y: lastY });
+            
+            ctx.beginPath();
+            ctx.moveTo(lastX, lastY);
+        }
+
+        function draw(e) {
+            e.preventDefault();
+            
+            if (!isDrawing || signaturePad.classList.contains('disabled')) return;
+            
+            const coords = getCoordinates(e);
+            
+            ctx.lineTo(coords.x, coords.y);
+            ctx.stroke();
+            
+            points.push({ x: coords.x, y: coords.y });
+            
+            lastX = coords.x;
+            lastY = coords.y;
+        }
+
+        function stopDrawing(e) {
+            e.preventDefault();
+            isDrawing = false;
+        }
+
+        // Event listeners for mouse
+        signaturePad.addEventListener('mousedown', startDrawing);
+        signaturePad.addEventListener('mousemove', draw);
+        signaturePad.addEventListener('mouseup', stopDrawing);
+        signaturePad.addEventListener('mouseleave', stopDrawing);
+
+        // Event listeners for touch (mobile)
+        signaturePad.addEventListener('touchstart', startDrawing, { passive: false });
+        signaturePad.addEventListener('touchmove', draw, { passive: false });
+        signaturePad.addEventListener('touchend', stopDrawing, { passive: false });
+        signaturePad.addEventListener('touchcancel', stopDrawing, { passive: false });
+
+        // Show signature section when email is focused
         emailAddressInput.addEventListener('focus', () => {
             disclaimerAndSignatureSection.classList.add('show');
-            resizeCanvas();
+            setTimeout(() => {
+                resizeCanvas();
+            }, 100);
         });
 
+        // Enable/disable signature based on checkbox
         agreeCheckbox.addEventListener('change', function() {
             if (this.checked) {
                 signaturePad.classList.remove('disabled');
                 clearBtn.disabled = false;
-                // Save and submit are now handled by one button
             } else {
                 signaturePad.classList.add('disabled');
                 clearBtn.disabled = true;
             }
         });
 
-        signaturePad.addEventListener('mousedown', (e) => {
-            if (signaturePad.classList.contains('disabled')) {
-                acknowledgmentModal.style.display = 'flex';
-                return;
-            }
-            isDrawing = true;
-            [lastX, lastY] = [e.offsetX, e.offsetY];
-        });
-
-        signaturePad.addEventListener('mousemove', (e) => {
-            if (!isDrawing || signaturePad.classList.contains('disabled')) return;
-            ctx.beginPath();
-            ctx.moveTo(lastX, lastY);
-            ctx.lineTo(e.offsetX, e.offsetY);
-            ctx.stroke();
-            [lastX, lastY] = [e.offsetX, e.offsetY];
-        });
-
-        signaturePad.addEventListener('mouseup', () => isDrawing = false);
-        signaturePad.addEventListener('mouseout', () => isDrawing = false);
-
+        // Clear signature
         clearBtn.addEventListener('click', () => {
+            points = [];
             initSignaturePad();
         });
 
+        // Submit form
         submitBtn.addEventListener('click', async (e) => {
-            // Check if all required fields are filled and signature is present
+            e.preventDefault();
+            
+            // Check if all required fields are filled
             if (!clientInfoForm.checkValidity()) {
                 alert("Please fill out all required fields.");
                 return;
             }
 
             if (signaturePad.classList.contains('disabled')) {
-                acknowledgmentModal.style.display = 'flex';
+                acknowledgmentModal.classList.add('active');
+                return;
+            }
+
+            if (points.length < 5) {
+                alert("Please provide a signature.");
                 return;
             }
 
@@ -493,8 +760,9 @@
             const formData = new FormData(clientInfoForm);
             
             // Collect signature data
-            const signatureData = signaturePad.toDataURL();
+            const signatureData = signaturePad.toDataURL('image/png');
             formData.append('Signature', signatureData);
+            formData.append('Signature Points', JSON.stringify(points));
 
             // Submit data to Formspree
             try {
@@ -509,9 +777,12 @@
                 if (response.ok) {
                     successMessage.style.display = 'block';
                     clientInfoForm.reset();
+                    points = [];
                     initSignaturePad();
-                    disclaimerAndSignatureSection.classList.remove('show');
                     agreeCheckbox.checked = false;
+                    signaturePad.classList.add('disabled');
+                    clearBtn.disabled = true;
+                    
                     setTimeout(() => {
                         successMessage.style.display = 'none';
                     }, 5000);
@@ -524,37 +795,101 @@
             }
         });
 
-        modalCloseBtn.addEventListener('click', () => {
-            acknowledgmentModal.style.display = 'none';
-        });
-
-        window.addEventListener('click', (event) => {
-            if (event.target == acknowledgmentModal) {
-                acknowledgmentModal.style.display = 'none';
-            }
-        });
-
+        // Print function
         printBtn.addEventListener('click', () => {
             window.print();
         });
 
-        // Resize canvas to fit its container
-        function resizeCanvas() {
-            const container = document.getElementById('signature-pad-container');
-            const ratio = Math.max(window.devicePixelRatio || 1, 1);
-            signaturePad.width = container.offsetWidth * ratio;
-            signaturePad.height = container.offsetHeight * ratio;
-            signaturePad.style.width = container.offsetWidth + 'px';
-            signaturePad.style.height = container.offsetHeight + 'px';
-            ctx.scale(ratio, ratio);
-            initSignaturePad(); // Re-initialize the pad after resizing
+        // Modal functions
+        function closeModal() {
+            acknowledgmentModal.classList.remove('active');
         }
 
-        window.addEventListener('resize', resizeCanvas);
+        modalCloseBtn.addEventListener('click', closeModal);
+
+        window.addEventListener('click', (event) => {
+            if (event.target == acknowledgmentModal) {
+                closeModal();
+            }
+        });
+
+        // SMS Functions
+        function showSMSModal() {
+            const modal = document.getElementById('smsModal');
+            modal.classList.add('active');
+        }
+
+        function closeSMSModal() {
+            const modal = document.getElementById('smsModal');
+            modal.classList.remove('active');
+        }
+
+        function sendSMS() {
+            const phone = document.getElementById('smsPhoneNumber').value.trim();
+            
+            if (!phone) {
+                alert('Please enter a phone number');
+                return;
+            }
+            
+            // Get current page URL
+            const currentUrl = window.location.href;
+            const message = `Please review and sign the WebSwan E-Signature Agreement: ${currentUrl}`;
+            
+            // Clean phone number
+            const cleanPhone = phone.replace(/[^\d+]/g, '');
+            
+            // Check if mobile device
+            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+            
+            if (isMobile) {
+                // On mobile - open SMS app
+                let smsUrl;
+                if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+                    smsUrl = `sms:${cleanPhone}&body=${encodeURIComponent(message)}`;
+                } else {
+                    smsUrl = `sms:${cleanPhone}?body=${encodeURIComponent(message)}`;
+                }
+                window.location.href = smsUrl;
+            } else {
+                // On desktop - copy to clipboard
+                navigator.clipboard.writeText(`${message}\n\nSent to: ${cleanPhone}`).then(() => {
+                    alert('Message copied to clipboard! You can now paste it into your SMS app.');
+                }).catch(() => {
+                    alert('Please copy this message manually:\n\n' + message);
+                });
+            }
+            
+            closeSMSModal();
+        }
+
+        function shareViaWhatsApp() {
+            const currentUrl = window.location.href;
+            const message = encodeURIComponent(`Please review and sign the WebSwan E-Signature Agreement: ${currentUrl}`);
+            window.open(`https://wa.me/?text=${message}`, '_blank');
+        }
+
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            resizeCanvas();
+        });
 
         // Initial setup
-        initSignaturePad();
-        resizeCanvas();
+        window.addEventListener('load', () => {
+            resizeCanvas();
+            initSignaturePad();
+            
+            // Show signature section by default for better UX
+            disclaimerAndSignatureSection.classList.add('show');
+        });
+
+        // Close SMS modal when clicking outside
+        window.addEventListener('click', (event) => {
+            const smsModal = document.getElementById('smsModal');
+            if (event.target === smsModal) {
+                closeSMSModal();
+            }
+        });
     </script>
 </body>
 </html>
