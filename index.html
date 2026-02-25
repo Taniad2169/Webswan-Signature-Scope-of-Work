@@ -263,6 +263,15 @@
             background: #128C7E;
         }
 
+        /* NEW PRIVACY BUTTON STYLE */
+        .btn-privacy {
+            background: #4a6580;
+            color: white;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 10px;
+        }
+
         .btn:disabled {
             opacity: 0.5;
             cursor: not-allowed;
@@ -465,7 +474,6 @@
                         </form>
                     </div>
 
-                    <!-- SMS Share Section -->
                     <div class="sms-section">
                         <h3><i class="fab fa-whatsapp"></i> Share via SMS/WhatsApp</h3>
                         <div style="display: flex; gap: 10px; flex-wrap: wrap;">
@@ -528,11 +536,13 @@
             </div>
             <footer>
                 <p>&copy; 2024 The Web Swan. All rights reserved.</p>
+                <a href="https://www.thewebswan.com/privacy-policy" target="_blank" class="btn btn-privacy">
+                    <i class="fas fa-shield-alt"></i> Compliance & Privacy Policy
+                </a>
             </footer>
         </div>
     </div>
 
-    <!-- Acknowledgment Modal -->
     <div id="acknowledgmentModal" class="modal">
         <div class="modal-content">
             <h3><i class="fas fa-exclamation-circle" style="color: #e74c3c;"></i> Please Acknowledge</h3>
@@ -541,7 +551,6 @@
         </div>
     </div>
 
-    <!-- SMS Modal -->
     <div id="smsModal" class="modal">
         <div class="modal-content">
             <h3><i class="fas fa-sms"></i> Send via SMS</h3>
@@ -832,35 +841,18 @@
                 return;
             }
             
-            // Get current page URL
             const currentUrl = window.location.href;
-            const message = `Please review and sign the WebSwan E-Signature Agreement: ${currentUrl}`;
-            
-            // Clean phone number
+            const message = encodeURIComponent(`Please review and sign the WebSwan E-Signature Agreement: ${currentUrl}`);
             const cleanPhone = phone.replace(/[^\d+]/g, '');
             
-            // Check if mobile device
             const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
             
             if (isMobile) {
-                // On mobile - open SMS app
-                let smsUrl;
-                if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-                    smsUrl = `sms:${cleanPhone}&body=${encodeURIComponent(message)}`;
-                } else {
-                    smsUrl = `sms:${cleanPhone}?body=${encodeURIComponent(message)}`;
-                }
+                let smsUrl = /iPhone|iPad|iPod/i.test(navigator.userAgent) ? `sms:${cleanPhone}&body=${message}` : `sms:${cleanPhone}?body=${message}`;
                 window.location.href = smsUrl;
             } else {
-                // On desktop - copy to clipboard
-                navigator.clipboard.writeText(`${message}\n\nSent to: ${cleanPhone}`).then(() => {
-                    alert('Message copied to clipboard! You can now paste it into your SMS app.');
-                }).catch(() => {
-                    alert('Please copy this message manually:\n\n' + message);
-                });
+                alert(`URL copied! You can manually send it to ${phone}`);
             }
-            
-            closeSMSModal();
         }
 
         function shareViaWhatsApp() {
@@ -868,28 +860,6 @@
             const message = encodeURIComponent(`Please review and sign the WebSwan E-Signature Agreement: ${currentUrl}`);
             window.open(`https://wa.me/?text=${message}`, '_blank');
         }
-
-        // Handle window resize
-        window.addEventListener('resize', () => {
-            resizeCanvas();
-        });
-
-        // Initial setup
-        window.addEventListener('load', () => {
-            resizeCanvas();
-            initSignaturePad();
-            
-            // Show signature section by default for better UX
-            disclaimerAndSignatureSection.classList.add('show');
-        });
-
-        // Close SMS modal when clicking outside
-        window.addEventListener('click', (event) => {
-            const smsModal = document.getElementById('smsModal');
-            if (event.target === smsModal) {
-                closeSMSModal();
-            }
-        });
     </script>
 </body>
 </html>
