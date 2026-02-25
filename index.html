@@ -6,380 +6,59 @@
     <title>WebSwan E-Signature Agreement</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            font-weight: bold;
-        }
-
-        body {
-            background: white;
-            color: #14395d;
-            line-height: 1.6;
-            min-height: 100vh;
-        }
-
-        .main-wrapper {
-            background-color: #14395d;
-            padding: 20px;
-        }
-
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            min-height: 95vh;
-        }
-
-        header {
-            background: #14395d;
-            color: #1DF1F1;
-            padding: 25px;
-            text-align: center;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 15px;
-            flex-wrap: wrap;
-        }
-
-        .logo i {
-            font-size: 36px;
-            margin-right: 15px;
-            color: #1DF1F1;
-        }
-
-        h1 {
-            font-size: 28px;
-            margin-bottom: 10px;
-            color: #1DF1F1;
-        }
-
-        .header-description {
-            opacity: 0.9;
-            max-width: 600px;
-            margin: 0 auto;
-            color: #1DF1F1;
-        }
-
-        .content-wrapper {
-            display: flex;
-            flex-direction: column;
-            flex-grow: 1;
-            padding: 20px;
-            overflow-y: auto;
-            -webkit-overflow-scrolling: touch;
-        }
-
-        .form-section {
-            padding: 20px;
-        }
-
-        .form-section h2 {
-            color: #14395d;
-            border-bottom: 2px solid #14395d;
-            padding-bottom: 10px;
-            margin-bottom: 20px;
-            font-weight: bold;
-        }
-
-        .form-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            background: white;
-            padding: 25px;
-        }
-
-        .form-group {
-            margin-bottom: 15px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: bold;
-            color: #14395d;
-        }
-
-        input[type="text"],
-        input[type="email"],
-        textarea {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #ccc;
-            border-radius: 5px;
-            font-size: 16px;
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
-            box-sizing: border-box;
-            background-color: #e1e9f0;
-            font-weight: bold;
-            color: #073766;
-            border-style: inset;
-            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2) inset;
-            -webkit-appearance: none;
-        }
-
-        .auto-resize {
-            field-sizing: content;
-            min-width: 150px;
-        }
-
-        .disclaimer-and-signature {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.8s ease-in-out;
-        }
-
-        .disclaimer-and-signature.show {
-            max-height: 5000px;
-        }
-
-        .disclaimer-container {
-            padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 10px;
-            margin-top: 20px;
-            overflow-y: auto;
-            max-height: 400px;
-            -webkit-overflow-scrolling: touch;
-            background: #f8f9fa;
-        }
-
-        .disclaimer-container h2 {
-            color: #14395d;
-            font-weight: bold;
-            margin-bottom: 15px;
-        }
-
-        .disclaimer-container strong {
-            color: #14395d;
-        }
-
-        .disclaimer-container p {
-            margin-bottom: 15px;
-        }
-
-        .signature-section {
-            padding: 20px;
-            text-align: center;
-            background: #f9f9f9;
-            border-top: 1px solid #ccc;
-        }
-
-        #signature-pad-container {
-            border: 2px dashed #95a5a6;
-            border-radius: 5px;
-            margin-top: 10px;
-            height: 200px;
-            background: white;
-            touch-action: none;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        #signature-pad {
-            width: 100%;
-            height: 100%;
-            background-color: #ecf0f1;
-            border-radius: 5px;
-            cursor: crosshair;
-            touch-action: none;
-            display: block;
-        }
-
-        #signature-pad.disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            pointer-events: none;
-        }
-
-        .signature-controls {
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-            margin-top: 15px;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            padding: 12px 24px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: all 0.3s ease;
-            font-size: 14px;
-            min-width: 120px;
-        }
-
-        .btn-primary {
-            background-color: #14395d;
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background-color: #1e4a7a;
-        }
-
-        .btn-secondary {
-            background-color: #95a5a6;
-            color: white;
-        }
-
-        .btn-secondary:hover {
-            background-color: #7f8c8d;
-        }
-
-        .btn-success {
-            background: #28a745;
-            color: white;
-        }
-
-        .btn-success:hover {
-            background: #218838;
-        }
-
-        .btn-sms {
-            background: #25D366;
-            color: white;
-        }
-
-        .btn-email {
-            background: #14395d;
-            color: white;
-            border: 1px solid #1DF1F1;
-        }
-
-        .btn-privacy {
-            background: #4a6580;
-            color: white;
-            text-decoration: none;
-            display: inline-block;
-            margin-top: 10px;
-            font-size: 12px;
-        }
-
-        .btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        /* SMS/SHARE SECTION STYLING */
-        .sms-section {
-            background: #f0f9ff;
-            padding: 15px;
-            border-radius: 8px;
-            margin: 20px auto;
-            border: 2px dashed #14395d;
-            max-width: 600px;
-        }
-
-        footer {
-            text-align: center;
-            padding: 20px;
-            font-size: 0.9em;
-            color: #7f8c8d;
-            background-color: #f1f1f1;
-        }
-
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            align-items: center;
-            justify-content: center;
-        }
-
-        .modal.active {
-            display: flex;
-        }
-
-        .modal-content {
-            background-color: white;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            max-width: 450px;
-            width: 90%;
-            text-align: center;
-        }
-
-        .acknowledgement-label {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-top: 10px;
-            flex-wrap: wrap;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-weight: bold; }
+        body { background: white; color: #14395d; line-height: 1.6; min-height: 100vh; }
+        .main-wrapper { background-color: #14395d; padding: 20px; }
+        .container { max-width: 1000px; margin: 0 auto; background: white; border-radius: 15px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15); overflow: hidden; display: flex; flex-direction: column; min-height: 95vh; }
+        header { background: #14395d; color: #1DF1F1; padding: 25px; text-align: center; }
+        .logo { display: flex; align-items: center; justify-content: center; margin-bottom: 15px; }
+        .logo i { font-size: 36px; margin-right: 15px; color: #1DF1F1; }
+        h1 { font-size: 28px; color: #1DF1F1; }
+        .content-wrapper { display: flex; flex-direction: column; flex-grow: 1; padding: 20px; overflow-y: auto; }
+        .form-section { padding: 20px; }
+        .form-section h2 { color: #14395d; border-bottom: 2px solid #14395d; padding-bottom: 10px; margin-bottom: 20px; }
+        .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; padding: 25px; }
+        label { display: block; margin-bottom: 8px; color: #14395d; }
+        input[type="text"], input[type="email"] { width: 100%; padding: 12px; border: 2px solid #ccc; border-radius: 5px; background-color: #e1e9f0; color: #073766; border-style: inset; }
         
-        .acknowledgement-label input {
-            margin-right: 8px;
-            width: 20px;
-            height: 20px;
-            cursor: pointer;
-        }
+        .disclaimer-container { padding: 20px; border: 1px solid #ccc; border-radius: 10px; margin-top: 20px; background: #f8f9fa; max-height: 300px; overflow-y: auto; }
+        
+        /* WAIVER STYLING */
+        .compliance-waiver-box { background: #fff4f4; border: 2px solid #e74c3c; padding: 15px; border-radius: 8px; margin: 20px 0; }
+        .compliance-waiver-box p { font-size: 13px; color: #c0392b; line-height: 1.4; }
 
-        .emoji {
-            font-size: 24px;
-            margin-right: 10px;
-        }
+        .signature-section { padding: 20px; text-align: center; background: #f9f9f9; border-top: 1px solid #ccc; }
+        #signature-pad-container { border: 2px dashed #95a5a6; border-radius: 5px; margin-top: 10px; height: 200px; background: white; touch-action: none; }
+        #signature-pad { width: 100%; height: 100%; cursor: crosshair; display: block; }
+        #signature-pad.disabled { opacity: 0.3; cursor: not-allowed; pointer-events: none; }
 
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-5px); }
-        }
+        .btn { padding: 12px 24px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; font-size: 14px; margin: 5px; }
+        .btn-primary { background-color: #14395d; color: white; }
+        .btn-secondary { background-color: #95a5a6; color: white; }
+        .btn-success { background: #28a745; color: white; }
+        .btn-sms { background: #25D366; color: white; }
+        .btn-email { background: #14395d; color: white; border: 1px solid #1DF1F1; }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
-        .emoji-bounce {
-            animation: bounce 0.6s infinite alternate;
-        }
+        .acknowledgement-label { display: flex; align-items: flex-start; text-align: left; margin-bottom: 10px; gap: 10px; }
+        .acknowledgement-label input { width: 22px; height: 22px; cursor: pointer; flex-shrink: 0; }
 
-        #success-message {
-            display: none;
-            text-align: center;
-            margin-top: 20px;
-            padding: 15px;
-            background-color: #d4edda;
-            color: #155724;
-            border-radius: 5px;
-            border: 1px solid #c3e6cb;
-        }
-
-        /* Mobile optimizations */
-        @media (max-width: 600px) {
-            .btn {
-                width: 100%;
-                margin: 5px 0;
-            }
-            .signature-controls {
-                flex-direction: column;
-            }
-        }
+        .sms-section { background: #f0f9ff; padding: 15px; border-radius: 8px; margin: 20px auto; border: 2px dashed #14395d; }
+        footer { text-align: center; padding: 20px; background-color: #f1f1f1; }
+        
+        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); align-items: center; justify-content: center; }
+        .modal.active { display: flex; }
+        .modal-content { background: white; padding: 30px; border-radius: 12px; width: 90%; max-width: 400px; text-align: center; }
+        
+        @media (max-width: 600px) { .btn { width: 100%; } }
     </style>
 </head>
 <body>
     <div class="main-wrapper">
         <div class="container">
             <header>
-                <div class="logo">
-                    <i class="fas fa-feather-alt"></i>
-                    <h1>WebSwan E-Signature Agreement</h1>
-                </div>
-                <p class="header-description">Please provide your information and sign the agreement below</p>
+                <div class="logo"><i class="fas fa-feather-alt"></i><h1>WebSwan E-Signature Agreement</h1></div>
+                <p>Please provide your information and sign below</p>
             </header>
 
             <div class="content-wrapper">
@@ -388,206 +67,142 @@
                         <h2>Client Information</h2>
                         <form id="client-info-form" action="https://formspree.io/f/xrbyzwbw" method="POST">
                             <div class="form-grid">
-                                <div class="form-group">
-                                    <label for="full-name"><i class="fas fa-user"></i> Full Name</label>
-                                    <input type="text" id="full-name" name="Full Name" class="auto-resize" placeholder="Enter your full name" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="company-name"><i class="fas fa-building"></i> Company Name</label>
-                                    <input type="text" id="company-name" name="Company Name" class="auto-resize" placeholder="Enter your company name">
-                                </div>
-                                <div class="form-group">
-                                    <label for="phone-number"><i class="fas fa-phone"></i> Phone Number</label>
-                                    <input type="text" id="phone-number" name="Phone Number" class="auto-resize" placeholder="Enter your phone number" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="email-address"><i class="fas fa-envelope"></i> Email Address</label>
-                                    <input type="email" id="email-address" name="Email Address" class="auto-resize" placeholder="Enter your email address" required>
-                                </div>
+                                <div class="form-group"><label>Full Name</label><input type="text" name="Full Name" required></div>
+                                <div class="form-group"><label>Company</label><input type="text" name="Company Name"></div>
+                                <div class="form-group"><label>Phone</label><input type="text" id="phone-number" name="Phone Number" required></div>
+                                <div class="form-group"><label>Email</label><input type="email" id="email-address" name="Email Address" required></div>
                             </div>
                         </form>
                     </div>
 
-                    <div id="disclaimer-and-signature-section" class="disclaimer-and-signature show">
-                        <div class="disclaimer-container">
-                            <h2>WebSwan Scope of Work for Web Design Services</h2>
-                            <p><strong>1. Project Overview</strong><br>
-                            We begin with a free demo at no cost and with no obligation... [Truncated for Space] ...For more details, please review our Privacy Policy at <a href="https://www.thewebswan.com/privacy-policy" target="_blank">https://www.thewebswan.com/privacy-policy</a></p>
+                    <div class="disclaimer-container">
+                        <h3>Terms of Service</h3>
+                        <p>1. Project Overview: We begin with a free demo... [Rest of your text] ...Link domain responsibility stays with client.</p>
+                    </div>
+
+                    <div class="signature-section">
+                        <div class="acknowledgement-label">
+                            <input type="checkbox" id="agreeCheckbox">
+                            <p>I acknowledge and agree to the General Terms and Conditions above.</p>
                         </div>
 
-                        <div class="signature-section">
-                            <div class="acknowledgement-label" id="acknowledgementLabel">
-                                <span class="emoji emoji-bounce">👇</span>
-                                <input type="checkbox" id="agreeCheckbox">
-                                <p><strong>I acknowledge, understand and agree to the terms and conditions above</strong></p>
-                            </div>
-
-                            <div id="signature-pad-container">
-                                <canvas id="signature-pad" class="disabled"></canvas>
-                            </div>
-
-                            <div class="signature-controls">
-                                <button type="button" class="btn btn-secondary" id="clear-btn" disabled>Clear Signature</button>
-                                <button type="button" class="btn btn-primary" id="submit-btn">Submit Agreement</button>
-                                <button type="button" class="btn btn-success" id="print-btn">Print / Save PDF</button>
-                            </div>
-
-                            <div class="sms-section">
-                                <h3 style="color: #14395d; margin-bottom: 10px;"><i class="fas fa-share-alt"></i> Share this Agreement</h3>
-                                <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-                                    <button onclick="showSMSModal()" class="btn btn-sms" style="flex: 1;">
-                                        <i class="fas fa-sms"></i> Share via SMS
-                                    </button>
-                                    <button onclick="shareViaEmail()" class="btn btn-email" style="flex: 1;">
-                                        <i class="fas fa-envelope"></i> Share via Email
-                                    </button>
+                        <div class="compliance-waiver-box">
+                            <div class="acknowledgement-label">
+                                <input type="checkbox" id="complianceWaiver">
+                                <div>
+                                    <p><strong>LEGAL COMPLIANCE WAIVER:</strong> I understand that by not opting for professional ADA Accessibility tools and a Privacy Policy/Cookie Banner, my website may not meet state or federal legal requirements. I hereby release <strong>The Web Swan</strong> from any liability regarding legal actions or fines from State Attorneys General or private parties. I assume full responsibility for my website's legal compliance.</p>
                                 </div>
-                                <p style="font-size: 11px; margin-top: 10px; color: #666;">
-                                    Send this link to a partner or save it for your records.
-                                </p>
                             </div>
+                        </div>
+
+                        <div id="signature-pad-container">
+                            <canvas id="signature-pad" class="disabled"></canvas>
+                        </div>
+
+                        <div class="signature-controls" style="margin-top:15px;">
+                            <button type="button" class="btn btn-secondary" id="clear-btn" disabled>Clear</button>
+                            <button type="button" class="btn btn-primary" id="submit-btn">Submit Agreement</button>
+                            <button type="button" class="btn btn-success" id="print-btn">Print / PDF</button>
+                        </div>
+
+                        <div class="sms-section">
+                            <h3>Share via:</h3>
+                            <button onclick="showSMSModal()" class="btn btn-sms">SMS</button>
+                            <button onclick="shareViaEmail()" class="btn btn-email">Email</button>
                         </div>
                     </div>
                 </main>
-                <div id="success-message">
-                    <i class="fas fa-check-circle" style="font-size: 24px; margin-right: 10px;"></i>
-                    Form submitted successfully!
-                </div>
             </div>
             <footer>
-                <p>&copy; 2024 The Web Swan. All rights reserved.</p>
-                <a href="https://www.thewebswan.com/privacy-policy" target="_blank" class="btn btn-privacy">
-                    <i class="fas fa-shield-alt"></i> Compliance & Privacy Policy
-                </a>
+                <p>&copy; 2024 The Web Swan</p>
             </footer>
         </div>
     </div>
 
     <div id="acknowledgmentModal" class="modal">
         <div class="modal-content">
-            <h3><i class="fas fa-exclamation-circle" style="color: #e74c3c;"></i> Please Acknowledge</h3>
-            <p>You must read and agree to the terms and conditions by checking the box before signing.</p>
-            <button class="modal-close" onclick="closeModal()">OK</button>
+            <h3>Action Required</h3>
+            <p>Please check both acknowledgement boxes to unlock the signature pad.</p>
+            <button class="btn btn-primary" onclick="closeModal()">OK</button>
         </div>
     </div>
 
     <div id="smsModal" class="modal">
         <div class="modal-content">
-            <h3><i class="fas fa-sms"></i> Send via SMS</h3>
-            <input type="tel" id="smsPhoneNumber" placeholder="+1234567890">
-            <div class="modal-buttons" style="margin-top:15px;">
-                <button onclick="sendSMS()" class="btn btn-sms">Send SMS</button>
-                <button onclick="closeSMSModal()" class="btn btn-secondary">Cancel</button>
-            </div>
+            <h3>Send via SMS</h3>
+            <input type="tel" id="smsPhoneNumber" placeholder="+1234567890" style="width:100%; padding:10px; margin:10px 0;">
+            <button onclick="sendSMS()" class="btn btn-sms">Send</button>
+            <button onclick="closeSMSModal()" class="btn btn-secondary">Cancel</button>
         </div>
     </div>
 
     <script>
-        // ... [Signature logic stays the same as previous version] ...
-        const emailAddressInput = document.getElementById('email-address');
-        const disclaimerAndSignatureSection = document.getElementById('disclaimer-and-signature-section');
-        const agreeCheckbox = document.getElementById('agreeCheckbox');
         const signaturePad = document.getElementById('signature-pad');
+        const agreeCheckbox = document.getElementById('agreeCheckbox');
+        const complianceWaiver = document.getElementById('complianceWaiver');
         const clearBtn = document.getElementById('clear-btn');
-        const submitBtn = document.getElementById('submit-btn');
-        const clientInfoForm = document.getElementById('client-info-form');
-        const successMessage = document.getElementById('success-message');
-        const printBtn = document.getElementById('print-btn');
-
         const ctx = signaturePad.getContext('2d');
         let isDrawing = false;
         let points = [];
 
-        function initSignaturePad() {
-            ctx.fillStyle = '#ecf0f1';
-            ctx.fillRect(0, 0, signaturePad.width, signaturePad.height);
-            ctx.strokeStyle = '#14395d';
-            ctx.lineWidth = 2;
-            ctx.lineCap = 'round';
-            points = [];
-        }
-
         function resizeCanvas() {
             const container = document.getElementById('signature-pad-container');
             const rect = container.getBoundingClientRect();
-            const ratio = window.devicePixelRatio || 1;
-            signaturePad.width = rect.width * ratio;
-            signaturePad.height = rect.height * ratio;
-            signaturePad.style.width = rect.width + 'px';
-            signaturePad.style.height = rect.height + 'px';
-            ctx.scale(ratio, ratio);
-            initSignaturePad();
+            signaturePad.width = rect.width;
+            signaturePad.height = rect.height;
+            ctx.strokeStyle = '#14395d';
+            ctx.lineWidth = 2;
+        }
+        window.addEventListener('load', resizeCanvas);
+
+        // BOTH BOXES MUST BE CHECKED TO UNLOCK
+        function toggleSignature() {
+            if (agreeCheckbox.checked && complianceWaiver.checked) {
+                signaturePad.classList.remove('disabled');
+                clearBtn.disabled = false;
+            } else {
+                signaturePad.classList.add('disabled');
+                clearBtn.disabled = true;
+            }
         }
 
-        window.addEventListener('resize', resizeCanvas);
-        setTimeout(resizeCanvas, 500);
-
-        function getCoordinates(e) {
-            const rect = signaturePad.getBoundingClientRect();
-            const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-            const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-            return { x: (clientX - rect.left), y: (clientY - rect.top) };
-        }
+        agreeCheckbox.addEventListener('change', toggleSignature);
+        complianceWaiver.addEventListener('change', toggleSignature);
 
         signaturePad.addEventListener('mousedown', (e) => {
-            if (signaturePad.classList.contains('disabled')) { document.getElementById('acknowledgmentModal').classList.add('active'); return; }
+            if (signaturePad.classList.contains('disabled')) {
+                document.getElementById('acknowledgmentModal').classList.add('active');
+                return;
+            }
             isDrawing = true;
-            const coords = getCoordinates(e);
             ctx.beginPath();
-            ctx.moveTo(coords.x, coords.y);
+            ctx.moveTo(e.offsetX, e.offsetY);
         });
 
         signaturePad.addEventListener('mousemove', (e) => {
             if (!isDrawing) return;
-            const coords = getCoordinates(e);
-            ctx.lineTo(coords.x, coords.y);
+            ctx.lineTo(e.offsetX, e.offsetY);
             ctx.stroke();
-            points.push(coords);
+            points.push({x: e.offsetX, y: e.offsetY});
         });
 
         signaturePad.addEventListener('mouseup', () => isDrawing = false);
-
-        agreeCheckbox.addEventListener('change', function() {
-            if (this.checked) { signaturePad.classList.remove('disabled'); clearBtn.disabled = false; }
-            else { signaturePad.classList.add('disabled'); clearBtn.disabled = true; }
+        clearBtn.addEventListener('click', () => {
+            ctx.clearRect(0,0,signaturePad.width, signaturePad.height);
+            points = [];
         });
 
-        clearBtn.addEventListener('click', initSignaturePad);
-
-        submitBtn.addEventListener('click', async (e) => {
-            if (!clientInfoForm.checkValidity() || points.length < 5) {
-                alert("Please fill all fields and sign.");
-                return;
-            }
-            const formData = new FormData(clientInfoForm);
-            formData.append('Signature', signaturePad.toDataURL());
-            
-            try {
-                const response = await fetch(clientInfoForm.action, { method: 'POST', body: formData, headers: {'Accept': 'application/json'} });
-                if (response.ok) { successMessage.style.display = 'block'; clientInfoForm.reset(); initSignaturePad(); }
-            } catch (error) { alert("Submission failed."); }
-        });
-
-        printBtn.addEventListener('click', () => window.print());
-
-        // Modal Controls
         function closeModal() { document.getElementById('acknowledgmentModal').classList.remove('active'); }
         function showSMSModal() { document.getElementById('smsModal').classList.add('active'); }
         function closeSMSModal() { document.getElementById('smsModal').classList.remove('active'); }
 
-        // Share Functions
         function sendSMS() {
             const phone = document.getElementById('smsPhoneNumber').value;
-            const url = window.location.href;
-            const msg = encodeURIComponent("Please review and sign the WebSwan Agreement: " + url);
-            window.location.href = `sms:${phone}?body=${msg}`;
+            window.location.href = `sms:${phone}?body=${encodeURIComponent(window.location.href)}`;
         }
 
         function shareViaEmail() {
-            const url = window.location.href;
-            const subject = encodeURIComponent("WebSwan E-Signature Agreement");
-            const body = encodeURIComponent("Hello,\n\nPlease click the link below to review and sign our service agreement:\n\n" + url);
-            window.location.href = `mailto:?subject=${subject}&body=${body}`;
+            window.location.href = `mailto:?subject=Agreement&body=${encodeURIComponent(window.location.href)}`;
         }
     </script>
 </body>
