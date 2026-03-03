@@ -43,6 +43,17 @@
         .modal-content { background: white; padding: 30px; border-radius: 12px; width: 90%; max-width: 400px; text-align: center; }
         
         @media (max-width: 600px) { .btn { width: 100%; } }
+
+        /* Ensure canvas stays interactive during print/save */
+        @media print {
+            #signature-pad {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .btn, .sms-section, .modal, .btn-row {
+                display: none !important;
+            }
+        }
     </style>
 </head>
 <body>
@@ -107,13 +118,14 @@
     </div>
 
     <script>
-        // ===== SIGNATURE PAD SETUP =====
+        // ===== SIGNATURE PAD SETUP - ALWAYS LIVE =====
         const signaturePad = document.getElementById('signature-pad');
         const agreeCheckbox = document.getElementById('agreeCheckbox');
         const clearBtn = document.getElementById('clear-btn');
         const ctx = signaturePad.getContext('2d');
         let isDrawing = false;
 
+        // Initialize canvas with proper dimensions
         function resizeCanvas() {
             const container = document.getElementById('signature-pad-container');
             const rect = container.getBoundingClientRect();
@@ -121,38 +133,74 @@
             signaturePad.height = rect.height;
             ctx.strokeStyle = '#14395d';
             ctx.lineWidth = 2;
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
         }
         
         window.addEventListener('load', resizeCanvas);
         window.addEventListener('resize', resizeCanvas);
 
-        // DRAWING EVENTS - Always enabled
-        signaturePad.addEventListener('mousedown', (e) => {
+        // DRAWING EVENTS - ALWAYS ENABLED (no checkbox required)
+        signaturePad.addEventListener('mousedown', startDrawing);
+        signaturePad.addEventListener('mousemove', draw);
+        signaturePad.addEventListener('mouseup', stopDrawing);
+        signaturePad.addEventListener('mouseleave', stopDrawing);
+
+        // Touch support for mobile
+        signaturePad.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            const touch = e.touches[0];
+            const rect = signaturePad.getBoundingClientRect();
+            const x = touch.clientX - rect.left;
+            const y = touch.clientY - rect.top;
             isDrawing = true;
             ctx.beginPath();
-            ctx.moveTo(e.offsetX, e.offsetY);
+            ctx.moveTo(x, y);
         });
 
-        signaturePad.addEventListener('mousemove', (e) => {
+        signaturePad.addEventListener('touchmove', (e) => {
+            e.preventDefault();
             if (!isDrawing) return;
-            ctx.lineTo(e.offsetX, e.offsetY);
+            const touch = e.touches[0];
+            const rect = signaturePad.getBoundingClientRect();
+            const x = touch.clientX - rect.left;
+            const y = touch.clientY - rect.top;
+            ctx.lineTo(x, y);
             ctx.stroke();
         });
 
-        signaturePad.addEventListener('mouseup', () => isDrawing = false);
-        signaturePad.addEventListener('mouseleave', () => isDrawing = false);
+        signaturePad.addEventListener('touchend', (e) => {
+            e.preventDefault();
+            isDrawing = false;
+        });
 
-        // CLEAR BUTTON
+        function startDrawing(e) {
+            isDrawing = true;
+            ctx.beginPath();
+            ctx.moveTo(e.offsetX, e.offsetY);
+        }
+
+        function draw(e) {
+            if (!isDrawing) return;
+            ctx.lineTo(e.offsetX, e.offsetY);
+            ctx.stroke();
+        }
+
+        function stopDrawing() {
+            isDrawing = false;
+        }
+
+        // CLEAR BUTTON - Always works
         clearBtn.addEventListener('click', () => {
             ctx.clearRect(0, 0, signaturePad.width, signaturePad.height);
         });
 
-        // SUBMIT BUTTON
+        // SUBMIT BUTTON - Just shows alert, doesn't disable anything
         document.getElementById('submit-btn').addEventListener('click', function() {
             alert('Agreement recorded (demo). All fields are optional.');
         });
 
-        // PRINT/PDF BUTTON
+        // PRINT/PDF BUTTON - Signature pad stays LIVE during print
         document.getElementById('print-btn').addEventListener('click', function() {
             window.print();
         });
@@ -185,6 +233,15 @@
                 closeSMSModal();
             }
         });
+
+        // Ensure canvas stays interactive
+        setInterval(() => {
+            // Small hack to keep canvas context alive
+            if (ctx) {
+                ctx.strokeStyle = '#14395d';
+                ctx.lineWidth = 2;
+            }
+        }, 1000);
     </script>
 </body>
 </html>
